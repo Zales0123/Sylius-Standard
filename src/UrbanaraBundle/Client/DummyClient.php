@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Client;
+namespace UrbanaraBundle\Client;
 
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>

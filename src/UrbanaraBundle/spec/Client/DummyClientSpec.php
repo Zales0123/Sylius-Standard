@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\AppBundle\Client;
+namespace spec\UrbanaraBundle\Client;
 
 use PhpSpec\ObjectBehavior;
 
@@ -11,7 +11,7 @@ class DummyClientSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('AppBundle\Client\DummyClient');
+        $this->shouldHaveType('UrbanaraBundle\Client\DummyClient');
     }
 
     function it_returns_hardcoded_order_statuses_as_json()

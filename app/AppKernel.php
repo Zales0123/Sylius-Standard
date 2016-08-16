@@ -25,8 +25,8 @@ class AppKernel extends Kernel
         $bundles = [
             new \Sylius\Bundle\AdminBundle\SyliusAdminBundle(),
             new \Sylius\Bundle\ApiBundle\SyliusApiBundle(),
-            new \Sylius\Bundle\ShopBundle\SyliusShopBundle(),
             new \AppBundle\AppBundle(),
+            new \UrbanaraBundle\UrbanaraBundle(),
         ];
 
         return array_merge(parent::registerBundles(), $bundles);

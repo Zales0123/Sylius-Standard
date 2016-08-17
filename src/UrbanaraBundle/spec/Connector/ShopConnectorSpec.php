@@ -3,6 +3,7 @@
 namespace spec\UrbanaraBundle\Connector;
 
 use PhpSpec\ObjectBehavior;
+use UrbanaraBundle\Checker\OrdersStatusesChecker;
 use UrbanaraBundle\Driver\OrderDriver;
 
 /**
@@ -10,9 +11,9 @@ use UrbanaraBundle\Driver\OrderDriver;
  */
 class ShopConnectorSpec extends ObjectBehavior
 {
-    function let(OrderDriver $orderDriver)
+    function let(OrderDriver $orderDriver, OrdersStatusesChecker $ordersStatusesChecker)
     {
-        $this->beConstructedWith($orderDriver);
+        $this->beConstructedWith($orderDriver, $ordersStatusesChecker);
     }
 
     function it_is_initializable()
@@ -25,5 +26,18 @@ class ShopConnectorSpec extends ObjectBehavior
         $orderDriver->checkStatus('dummy_client', 10)->willReturn('new');;
 
         $this->checkOrderStatus('dummy_client', 10)->shouldReturn('new');;
+    }
+
+    function it_can_check_multiple_orders_statuses_as_once(OrdersStatusesChecker $ordersStatusesChecker)
+    {
+        $ordersStatusesChecker
+            ->checkOrderStatuses('client_id', [1, 3, 5])
+            ->willReturn([1 => 'new', 3 => 'pending', 5 => 'cancelled'])
+        ;
+
+        $this
+            ->checkOrdersStatuses('client_id', [1, 3, 5])
+            ->shouldReturn([1 => 'new', 3 => 'pending', 5 => 'cancelled'])
+        ;
     }
 }

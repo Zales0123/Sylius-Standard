@@ -5,6 +5,8 @@ parameters:
     urbanara.client.sylius.class: UrbanaraBundle\Client\SyliusClient
 
     urbanara.shop_connector.class: UrbanaraBundle\Connector\ShopConnector
+
+    urbanara.checker.order_statuses.class: UrbanaraBundle\Checker\OrdersStatusesChecker
 services:
     urbanara.registry.order_client:
         class: %sylius.registry.promotion_action.class%
@@ -28,4 +30,8 @@ services:
 
     urbanara.shop_connector:
         class: %urbanara.shop_connector.class%
+        arguments: [@urbanara.driver.order, @urbanara.checker.order_statuses]
+
+    urbanara.checker.order_statuses:
+        class: %urbanara.checker.order_statuses.class%
         arguments: [@urbanara.driver.order]

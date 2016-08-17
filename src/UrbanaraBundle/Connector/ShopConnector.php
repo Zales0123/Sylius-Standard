@@ -2,6 +2,7 @@
 
 namespace UrbanaraBundle\Connector;
 
+use UrbanaraBundle\Checker\OrdersStatusesChecker;
 use UrbanaraBundle\Driver\OrderDriver;
 
 /**
@@ -15,11 +16,18 @@ class ShopConnector
     private $orderDriver;
 
     /**
-     * @param OrderDriver $orderDriver
+     * @var OrdersStatusesChecker
      */
-    public function __construct(OrderDriver $orderDriver)
+    private $orderStatusesChecker;
+
+    /**
+     * @param OrderDriver $orderDriver
+     * @param OrdersStatusesChecker $ordersStatusesChecker
+     */
+    public function __construct(OrderDriver $orderDriver, OrdersStatusesChecker $ordersStatusesChecker)
     {
         $this->orderDriver = $orderDriver;
+        $this->orderStatusesChecker = $ordersStatusesChecker;
     }
 
     /**
@@ -31,5 +39,16 @@ class ShopConnector
     public function checkOrderStatus($client, $orderId)
     {
         return $this->orderDriver->checkStatus($client, $orderId);
+    }
+
+    /**
+     * @param string $client
+     * @param array $ordersIds
+     *
+     * @return array
+     */
+    public function checkOrdersStatuses($client, array $ordersIds)
+    {
+        return $this->orderStatusesChecker->checkOrderStatuses($client, $ordersIds);
     }
 }

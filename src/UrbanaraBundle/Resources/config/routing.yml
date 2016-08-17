@@ -1,0 +1,4 @@
+urbanara_check_order_status:
+    path: /check-status/{client}/{orderId}
+    defaults:
+        _controller: UrbanaraBundle:Test:checkStatus

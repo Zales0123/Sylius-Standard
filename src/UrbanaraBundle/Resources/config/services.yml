@@ -1,0 +1,23 @@
+parameters:
+    urbanara.driver.order.class: UrbanaraBundle\Driver\OrderDriver
+    urbanara.client.dummy.class: UrbanaraBundle\Client\DummyClient
+    urbanara.shop_connector.class: UrbanaraBundle\Connector\ShopConnector
+services:
+    urbanara.registry.order_client:
+        class: %sylius.registry.promotion_action.class%
+        arguments:
+            - "UrbanaraBundle\\Client\\OrderClientInterface"
+            - "order client"
+
+    urbanara.driver.order:
+        class: %urbanara.driver.order.class%
+        arguments: [@urbanara.registry.order_client]
+
+    urbanara.client.dummy:
+        class: %urbanara.client.dummy.class%
+        tags:
+            - { name: "urbanara.client", type: "dummy" }
+
+    urbanara.shop_connector:
+        class: %urbanara.shop_connector.class%
+        arguments: [@urbanara.driver.order]

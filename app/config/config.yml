@@ -8,6 +8,8 @@ imports:
     - { resource: "parameters.yml" }
     - { resource: "security.yml" }
 
+    - { resource: "@UrbanaraBundle/Resources/config/services.yml" }
+
 framework:
     translator: { fallback: "%locale%" }
     secret: "%secret%"

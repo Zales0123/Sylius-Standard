@@ -11,3 +11,7 @@ sylius_admin:
 sylius_api:
     resource: "@SyliusApiBundle/Resources/config/routing/main.yml"
     prefix: /api
+
+urbanara:
+    resource: "@UrbanaraBundle/Resources/config/routing.yml"
+    prefix: /

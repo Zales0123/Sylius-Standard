@@ -5,7 +5,7 @@ namespace UrbanaraBundle\Client;
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>
  */
-class DummyClient
+class DummyClient implements OrderClientInterface
 {
     /**
      * @var array
@@ -17,9 +17,7 @@ class DummyClient
     ];
 
     /**
-     * @param int $orderId
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function checkStatus($orderId)
     {

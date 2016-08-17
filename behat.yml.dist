@@ -2,10 +2,16 @@ imports:
     - vendor/sylius/sylius/behat.yml.dist
 
 default:
+    suites:
+        urbanara_tes:
+            contexts_as_services:
+                - urbanara.behat.context.test
+            filters:
+                tags: "@urbanara"
     extensions:
         Sylius\Behat\Extension\MultiContainerExtension:
             imports:
-                - "vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.xml"
+                - "src/UrbanaraBundle/Behat/Resources/services.xml"
 
         FriendsOfBehat\SuiteSettingsExtension:
             paths:

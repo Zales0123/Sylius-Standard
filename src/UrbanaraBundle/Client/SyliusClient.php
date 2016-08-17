@@ -33,7 +33,7 @@ class SyliusClient
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneBy(['number' => $orderId]);
         if (null === $order) {
-            throw new \InvalidArgumentException(sprintf('Order with ID %d does not exist.', $orderId));
+            throw new \InvalidArgumentException(sprintf('Order with ID %s does not exist.', $orderId));
         }
 
         return $order->getState();

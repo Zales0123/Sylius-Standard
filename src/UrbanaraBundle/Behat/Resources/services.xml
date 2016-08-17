@@ -5,9 +5,11 @@
 
     <services>
         <service id="urbanara.behat.page.check_status" class="UrbanaraBundle\Behat\Page\CheckStatusPage" parent="sylius.behat.symfony_page" scope="scenario" public="false" />
+        <service id="urbanara.behat.page.check_statuses" class="UrbanaraBundle\Behat\Page\CheckStatusesPage" parent="sylius.behat.symfony_page" scope="scenario" public="false" />
 
         <service id="urbanara.behat.context.test" class="UrbanaraBundle\Behat\Context\TestContext" scope="scenario">
             <argument type="service" id="urbanara.behat.page.check_status" />
+            <argument type="service" id="urbanara.behat.page.check_statuses" />
             <tag name="sylius.behat.context" />
         </service>
     </services>

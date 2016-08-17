@@ -3,7 +3,6 @@
 namespace UrbanaraBundle\Connector;
 
 use UrbanaraBundle\Checker\OrdersStatusesChecker;
-use UrbanaraBundle\Driver\OrderDriver;
 
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>

@@ -3,6 +3,7 @@
 namespace UrbanaraBundle\Behat\Context;
 
 use Behat\Behat\Context\Context;
+use UrbanaraBundle\Behat\Page\CheckStatusesPage;
 use UrbanaraBundle\Behat\Page\CheckStatusPage;
 use Webmozart\Assert\Assert;
 
@@ -17,11 +18,18 @@ class TestContext implements Context
     private $checkStatusPage;
 
     /**
-     * @param CheckStatusPage $checkStatusPage
+     * @var CheckStatusesPage
      */
-    public function __construct(CheckStatusPage $checkStatusPage)
+    private $checkStatusesPage;
+
+    /**
+     * @param CheckStatusPage $checkStatusPage
+     * @param CheckStatusesPage $checkStatusesPage
+     */
+    public function __construct(CheckStatusPage $checkStatusPage, CheckStatusesPage $checkStatusesPage)
     {
         $this->checkStatusPage = $checkStatusPage;
+        $this->checkStatusesPage = $checkStatusesPage;
     }
 
     /**
@@ -38,5 +46,23 @@ class TestContext implements Context
     public function iThisOrderStatusShouldBe($status)
     {
         Assert::eq($status, $this->checkStatusPage->getContent());
+    }
+
+    /**
+     * @When I want to get status of orders :firstOrder, :secondOrder and :thirdOrder from :client client
+     */
+    public function iWantToGetStatusOfOrdersAndFromClient($firstOrder, $secondOrder, $thirdOrder, $client)
+    {
+        $this->checkStatusesPage->open(['client' => $client, 'ordersIds' => [$firstOrder, $secondOrder, $thirdOrder]]);
+    }
+
+    /**
+     * @Then order :orderId status should be :status
+     */
+    public function orderStatusShouldBe($orderId, $status)
+    {
+        $statuses = $this->checkStatusesPage->getStatuses();
+
+        Assert::eq($status, $statuses[$orderId]);
     }
 }

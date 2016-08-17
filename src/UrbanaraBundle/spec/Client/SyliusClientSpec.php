@@ -24,19 +24,19 @@ class SyliusClientSpec extends ObjectBehavior
 
     function it_uses_repository_to_check_order_status(RepositoryInterface $orderRepository, OrderInterface $order)
     {
-        $orderRepository->find(1)->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0001'])->willReturn($order);
         $order->getState()->willReturn('new');
 
-        $this->checkStatus(1)->shouldReturn('new');
+        $this->checkStatus('0001')->shouldReturn('new');
     }
 
     function it_throws_exception_if_order_with_given_id_does_not_exit(RepositoryInterface $orderRepository)
     {
-        $orderRepository->find(5)->willReturn(null);
+        $orderRepository->findOneBy(['number' => '0001'])->willReturn(null);
 
         $this
-            ->shouldThrow(new \InvalidArgumentException('Order with ID 5 does not exist.'))
-            ->during('checkStatus', [5])
+            ->shouldThrow(new \InvalidArgumentException('Order with ID 0001 does not exist.'))
+            ->during('checkStatus', ['0001'])
         ;
     }
 }

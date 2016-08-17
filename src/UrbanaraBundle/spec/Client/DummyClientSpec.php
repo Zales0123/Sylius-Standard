@@ -22,13 +22,9 @@ class DummyClientSpec extends ObjectBehavior
 
     function it_returns_hardcoded_order_statuses_as_json()
     {
-        $firstOrderStatus = json_encode(['status' => 'new']);
-        $secondOrderStatus = json_encode(['status' => 'pending']);
-        $thirdOrderStatus = json_encode(['status' => 'cancelled']);
-
-        $this->checkStatus(1)->shouldReturn($firstOrderStatus);
-        $this->checkStatus(2)->shouldReturn($secondOrderStatus);
-        $this->checkStatus(3)->shouldReturn($thirdOrderStatus);
+        $this->checkStatus(1)->shouldReturn('new');
+        $this->checkStatus(2)->shouldReturn('pending');
+        $this->checkStatus(3)->shouldReturn('cancelled');
     }
 
     function it_throws_exception_if_order_with_given_id_does_not_exist()

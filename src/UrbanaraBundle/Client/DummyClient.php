@@ -25,6 +25,6 @@ class DummyClient implements OrderClientInterface
             throw new \InvalidArgumentException(sprintf('Order with ID %d does not exist.', $orderId));
         }
 
-        return json_encode(['status' => self::$statuses[$orderId]]);
+        return self::$statuses[$orderId];
     }
 }

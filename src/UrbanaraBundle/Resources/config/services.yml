@@ -1,6 +1,9 @@
 parameters:
     urbanara.driver.order.class: UrbanaraBundle\Driver\OrderDriver
+
     urbanara.client.dummy.class: UrbanaraBundle\Client\DummyClient
+    urbanara.client.sylius.class: UrbanaraBundle\Client\SyliusClient
+
     urbanara.shop_connector.class: UrbanaraBundle\Connector\ShopConnector
 services:
     urbanara.registry.order_client:
@@ -17,6 +20,11 @@ services:
         class: %urbanara.client.dummy.class%
         tags:
             - { name: "urbanara.client", type: "dummy" }
+    urbanara.client.sylius:
+        class: %urbanara.client.sylius.class%
+        arguments: [@sylius.repository.order]
+        tags:
+            - { name: "urbanara.client", type: "sylius" }
 
     urbanara.shop_connector:
         class: %urbanara.shop_connector.class%

@@ -25,21 +25,21 @@ class OrderDriver
     }
 
     /**
-     * @param string $driver
+     * @param string $client
      * @param int $orderId
      *
      * @return string
      *
      * @throws UnexistingClientException
      */
-    public function checkStatus($driver, $orderId)
+    public function checkStatus($client, $orderId)
     {
-        if (!$this->orderClientsRegistry->has($driver)) {
-            throw new UnexistingClientException($driver);
+        if (!$this->orderClientsRegistry->has($client)) {
+            throw new UnexistingClientException($client);
         }
 
         /** @var OrderClientInterface $orderClient */
-        $orderClient = $this->orderClientsRegistry->get($driver);
+        $orderClient = $this->orderClientsRegistry->get($client);
 
         return $orderClient->checkStatus($orderId);
     }

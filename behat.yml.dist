@@ -5,6 +5,15 @@ default:
     suites:
         urbanara_tes:
             contexts_as_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.shared_storage
+                - sylius.behat.context.transform.customer
+                - sylius.behat.context.transform.order
+
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.order
+
                 - urbanara.behat.context.test
             filters:
                 tags: "@urbanara"

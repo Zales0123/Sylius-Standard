@@ -1,5 +1,5 @@
 @urbanara
-Feature: Getting order status from dummy client
+Feature: Getting order status from Dummy client
     In order to check correctness of application logic
     As a User
     I want to get proper orders statuses from Dummy client

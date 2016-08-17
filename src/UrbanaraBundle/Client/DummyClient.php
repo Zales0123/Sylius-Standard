@@ -5,7 +5,7 @@ namespace UrbanaraBundle\Client;
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>
  */
-class DummyClient implements OrderClientInterface
+class DummyClient
 {
     /**
      * @var array
@@ -17,7 +17,9 @@ class DummyClient implements OrderClientInterface
     ];
 
     /**
-     * {@inheritdoc}
+     * @param int $orderId
+     *
+     * @return string
      */
     public function checkStatus($orderId)
     {
@@ -25,6 +27,6 @@ class DummyClient implements OrderClientInterface
             throw new \InvalidArgumentException(sprintf('Order with ID %d does not exist.', $orderId));
         }
 
-        return self::$statuses[$orderId];
+        return json_encode(['status' => self::$statuses[$orderId]]);
     }
 }

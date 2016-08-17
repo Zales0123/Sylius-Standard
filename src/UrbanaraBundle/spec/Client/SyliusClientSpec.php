@@ -22,11 +22,6 @@ class SyliusClientSpec extends ObjectBehavior
         $this->shouldHaveType('UrbanaraBundle\Client\SyliusClient');
     }
 
-    function it_implements_order_client_interface()
-    {
-        $this->shouldImplement(OrderClientInterface::class);
-    }
-
     function it_uses_repository_to_check_order_status(RepositoryInterface $orderRepository, OrderInterface $order)
     {
         $orderRepository->find(1)->willReturn($order);

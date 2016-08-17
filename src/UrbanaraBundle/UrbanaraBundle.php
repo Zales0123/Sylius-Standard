@@ -4,7 +4,7 @@ namespace UrbanaraBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use UrbanaraBundle\DependencyInjection\RegisterClientsPass;
+use UrbanaraBundle\DependencyInjection\RegisterOrderDriversPass;
 
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>
@@ -16,6 +16,6 @@ class UrbanaraBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new RegisterClientsPass());
+        $container->addCompilerPass(new RegisterOrderDriversPass());
     }
 }

@@ -8,7 +8,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>
  */
-class SyliusClient implements OrderClientInterface
+class SyliusClient
 {
     /**
      * @var RepositoryInterface
@@ -24,8 +24,10 @@ class SyliusClient implements OrderClientInterface
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * @param int $orderId
+     *
+     * @return string
+     */
     public function checkStatus($orderId)
     {
         /** @var OrderInterface $order */

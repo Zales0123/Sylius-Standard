@@ -1,5 +1,6 @@
 parameters:
-    urbanara.driver.order.class: UrbanaraBundle\Driver\OrderDriver
+    urbanara.driver.dummy.class: UrbanaraBundle\Driver\DummyClientDriver
+    urbanara.driver.sylius.class: UrbanaraBundle\Driver\SyliusClientDriver
 
     urbanara.client.dummy.class: UrbanaraBundle\Client\DummyClient
     urbanara.client.sylius.class: UrbanaraBundle\Client\SyliusClient
@@ -7,31 +8,36 @@ parameters:
     urbanara.shop_connector.class: UrbanaraBundle\Connector\ShopConnector
 
     urbanara.checker.order_statuses.class: UrbanaraBundle\Checker\OrdersStatusesChecker
-services:
-    urbanara.registry.order_client:
-        class: %sylius.registry.promotion_action.class%
-        arguments:
-            - "UrbanaraBundle\\Client\\OrderClientInterface"
-            - "order client"
 
-    urbanara.driver.order:
-        class: %urbanara.driver.order.class%
-        arguments: [@urbanara.registry.order_client]
+    urbanara.registry.order_driver.class: Sylius\Component\Registry\ServiceRegistry
+services:
+    urbanara.registry.order_driver:
+        class: %urbanara.registry.order_driver.class%
+        arguments:
+            - "UrbanaraBundle\\Driver\\OrderDriverInterface"
+            - "order driver"
+
+    urbanara.driver.dummy:
+        class: %urbanara.driver.dummy.class%
+        arguments: [@urbanara.client.dummy]
+        tags:
+            - { name: "urbanara.order_driver", client: "dummy" }
+    urbanara.sylius.dummy:
+        class: %urbanara.driver.sylius.class%
+        arguments: [@urbanara.client.sylius]
+        tags:
+            - { name: "urbanara.order_driver", client: "sylius" }
 
     urbanara.client.dummy:
         class: %urbanara.client.dummy.class%
-        tags:
-            - { name: "urbanara.client", type: "dummy" }
     urbanara.client.sylius:
         class: %urbanara.client.sylius.class%
         arguments: [@sylius.repository.order]
-        tags:
-            - { name: "urbanara.client", type: "sylius" }
 
     urbanara.shop_connector:
         class: %urbanara.shop_connector.class%
-        arguments: [@urbanara.driver.order, @urbanara.checker.order_statuses]
+        arguments: [@urbanara.checker.order_statuses]
 
     urbanara.checker.order_statuses:
         class: %urbanara.checker.order_statuses.class%
-        arguments: [@urbanara.driver.order]
+        arguments: [@urbanara.registry.order_driver]

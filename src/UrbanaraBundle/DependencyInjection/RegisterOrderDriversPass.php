@@ -18,28 +18,28 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>
  */
-class RegisterClientsPass implements CompilerPassInterface
+class RegisterOrderDriversPass implements CompilerPassInterface
 {
     /**
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('urbanara.registry.order_client')) {
+        if (!$container->hasDefinition('urbanara.registry.order_driver')) {
             return;
         }
 
-        $registry = $container->getDefinition('urbanara.registry.order_client');
+        $registry = $container->getDefinition('urbanara.registry.order_driver');
 
-        $checkersServices = $container->findTaggedServiceIds('urbanara.client');
-        ksort($checkersServices);
+        $driversServices = $container->findTaggedServiceIds('urbanara.order_driver');
+        ksort($driversServices);
 
-        foreach ($checkersServices as $id => $attributes) {
-            if (!isset($attributes[0]['type'])) {
-                throw new \InvalidArgumentException('Tagged client needs to have `type` attribute.');
+        foreach ($driversServices as $id => $attributes) {
+            if (!isset($attributes[0]['client'])) {
+                throw new \InvalidArgumentException('Tagged driver needs to have `client` attribute.');
             }
 
-            $registry->addMethodCall('register', [$attributes[0]['type'], new Reference($id)]);
+            $registry->addMethodCall('register', [$attributes[0]['client'], new Reference($id)]);
         }
     }
 }

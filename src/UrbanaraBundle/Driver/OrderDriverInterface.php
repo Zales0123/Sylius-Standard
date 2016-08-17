@@ -1,18 +1,16 @@
 <?php
 
-namespace UrbanaraBundle\Client;
+namespace UrbanaraBundle\Driver;
 
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>
  */
-interface OrderClientInterface
+interface OrderDriverInterface
 {
     /**
      * @param int $orderId
      *
      * @return string
-     *
-     * @throws \InvalidArgumentException
      */
     public function checkStatus($orderId);
 }

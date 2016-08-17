@@ -2,7 +2,9 @@
 
 namespace UrbanaraBundle\Checker;
 
-use UrbanaraBundle\Driver\OrderDriver;
+use Sylius\Component\Registry\ServiceRegistryInterface;
+use UrbanaraBundle\Driver\OrderDriverInterface;
+use UrbanaraBundle\Exception\UnexistingDriverException;
 
 /**
  * @author Mateusz Zalewski <mateusz.zalewski@lakion.com>
@@ -10,16 +12,27 @@ use UrbanaraBundle\Driver\OrderDriver;
 class OrdersStatusesChecker
 {
     /**
-     * @var OrderDriver
+     * @var ServiceRegistryInterface
      */
-    private $orderDriver;
+    private $orderDriversRegistry;
 
     /**
-     * @param OrderDriver $orderDriver
+     * @param ServiceRegistryInterface $orderDriversRegistry
      */
-    public function __construct(OrderDriver $orderDriver)
+    public function __construct(ServiceRegistryInterface $orderDriversRegistry)
     {
-        $this->orderDriver = $orderDriver;
+        $this->orderDriversRegistry = $orderDriversRegistry;
+    }
+
+    /**
+     * @param string $client
+     * @param int $orderId
+     *
+     * @return string
+     */
+    public function checkOrderStatus($client, $orderId)
+    {
+        return $this->getDriverForClient($client)->checkStatus($orderId);
     }
 
     /**
@@ -28,13 +41,15 @@ class OrdersStatusesChecker
      *
      * @return array
      */
-    public function checkOrderStatuses($client, array $ordersIds)
+    public function checkOrdersStatuses($client, array $ordersIds)
     {
+        $orderDriver = $this->getDriverForClient($client);
+
         $statuses = [];
 
         foreach ($ordersIds as $orderId) {
             try {
-                $status = $this->orderDriver->checkStatus($client, $orderId);
+                $status = $orderDriver->checkStatus($orderId);
             } catch (\InvalidArgumentException $exception) {
                 continue;
             }
@@ -43,5 +58,19 @@ class OrdersStatusesChecker
         }
 
         return $statuses;
+    }
+
+    /**
+     * @param string $client
+     *
+     * @return OrderDriverInterface
+     */
+    private function getDriverForClient($client)
+    {
+        if (!$this->orderDriversRegistry->has($client)) {
+            throw new UnexistingDriverException($client);
+        }
+
+        return $this->orderDriversRegistry->get($client);
     }
 }

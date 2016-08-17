@@ -11,22 +11,15 @@ use UrbanaraBundle\Driver\OrderDriver;
 class ShopConnector
 {
     /**
-     * @var OrderDriver
-     */
-    private $orderDriver;
-
-    /**
      * @var OrdersStatusesChecker
      */
     private $orderStatusesChecker;
 
     /**
-     * @param OrderDriver $orderDriver
      * @param OrdersStatusesChecker $ordersStatusesChecker
      */
-    public function __construct(OrderDriver $orderDriver, OrdersStatusesChecker $ordersStatusesChecker)
+    public function __construct(OrdersStatusesChecker $ordersStatusesChecker)
     {
-        $this->orderDriver = $orderDriver;
         $this->orderStatusesChecker = $ordersStatusesChecker;
     }
 
@@ -38,7 +31,7 @@ class ShopConnector
      */
     public function checkOrderStatus($client, $orderId)
     {
-        return $this->orderDriver->checkStatus($client, $orderId);
+        return $this->orderStatusesChecker->checkOrderStatus($client, $orderId);
     }
 
     /**
@@ -49,6 +42,6 @@ class ShopConnector
      */
     public function checkOrdersStatuses($client, array $ordersIds)
     {
-        return $this->orderStatusesChecker->checkOrderStatuses($client, $ordersIds);
+        return $this->orderStatusesChecker->checkOrdersStatuses($client, $ordersIds);
     }
 }

@@ -146,9 +146,8 @@ jobs:
 
                 - sleep 60
 
-                - docker-compose exec php bin/console sylius:fixtures:load --no-interaction
-
-                - curl http://localhost/
+                - docker-compose exec php_test bin/console sylius:fixtures:load --no-interaction
+                - docker-compose exec vendor/bin/behat --tags="@managing_channels && ~@todo && ~@javascript"
 
             before_deploy:
                 - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin "$DOCKER_REGISTRY"

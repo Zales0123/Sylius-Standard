@@ -1,0 +1,20 @@
+imports:
+    - { resource: '@TataragneSyliusAutomatedAssociationPlugin/Resources/config/config.yml' }
+
+tataragne_sylius_automated_association:
+    # Default Product number to associate
+    default_product_number: 5
+
+    # Properties filter default configuration
+    properties_filters:
+        - 'code'
+        - 'averageRating'
+        - 'productTaxons.taxon.code'
+        - 'mainTaxon.code'
+        - 'variants.width'
+        - 'variants.height'
+        - 'variants.depth'
+        - 'variants.weight'
+        - 'variants.onHand'
+        - 'variants.channelPricings.price'
+        - 'variants.channelPricings.originalPrice'

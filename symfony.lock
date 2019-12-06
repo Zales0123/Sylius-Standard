@@ -830,6 +830,9 @@
     "symplify/token-runner": {
         "version": "v4.6.1"
     },
+    "tataragne/sylius-automated-associations-plugin": {
+        "version": "1.0-dev"
+    },
     "thecodingmachine/safe": {
         "version": "v0.1.5"
     },

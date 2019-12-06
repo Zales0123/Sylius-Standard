@@ -1,0 +1,3 @@
+tataragne_sylius_automated_associations_plugin:
+    resource: "@TataragneSyliusAutomatedAssociationPlugin/Resources/config/admin_routing.yml"
+    prefix: /admin

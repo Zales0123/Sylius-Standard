@@ -33,3 +33,16 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+        
+    App\Twig\:
+        resource: '../src/Twig'
+        autowire: false
+        autoconfigure: false
+
+    liip_imagine.templating.filter_extension:
+        class: App\Twig\FilterExtension
+        public: false
+        arguments:
+            - "@liip_imagine.cache.manager"
+        tags:
+            - { name: twig.extension }

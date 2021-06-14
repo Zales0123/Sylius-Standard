@@ -33,3 +33,7 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\Serializer\CustomerSerializer:
+        tags:
+            - { name: serializer.normalizer, priority: 100 }
